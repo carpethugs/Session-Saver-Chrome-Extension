@@ -3,12 +3,32 @@
   <head>
     <title>Page Title</title>
     <script src="popup.js"></script>
+    <style>
+      body {
+        background-color: lightgrey;
+      }
+      #homeMenu {
+      }
+      #saveMenu {
+        display: none;
+      }
+      #loadMenu {
+        display: none;
+      }
+      #deleteMenu {
+        display: none;
+      }
+      button {
+        margin: 3px;
+      }
+    </style>
   </head>
   <body>
     <h1>Session Saver</h1>
     <div id="homeMenu">
       <button id="saveSession">Save Session</button>
       <button id="loadSession">Load Session</button>
+      <button id="deleteSession">Delete Session</button>
     </div>
     <div id="saveMenu">
       <form>
@@ -18,12 +38,20 @@
       </form>
     </div>
     <div id="loadMenu">
+      <input list="sessNamesLoad" />
+      <datalist id="sessNamesLoad">
+        <option value="option 1"> </option>
+      </datalist>
+
+      <button id="sessionLoad">Load</button>
+    </div>
+    <div id="deleteMenu">
       <form>
-        <input list="sessNames" name="sessNames" />
-        <datalist id="sessNames">
+        <input list="sessNamesDel" />
+        <datalist id="sessNamesDel">
           <option value="option 1"></option>
         </datalist>
-        <button id="sessionLoad">Load</button>
+        <button id="sessionLoad">Delete</button>
       </form>
     </div>
   </body>

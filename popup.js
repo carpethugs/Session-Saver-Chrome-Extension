@@ -1,9 +1,9 @@
 document.addEventListener("DOMContentLoaded", function () {
   var saveButton = document.getElementById("saveSession");
   var loadButton = document.getElementById("loadSession");
+  var deleteButton = document.getElementById("deleteSession");
   var sessionSubmit = document.getElementById("sessionSubmit");
   var sessionLoad = document.getElementById("sessionLoad");
-
   let urls = [];
 
   saveButton.addEventListener("click", () => {
@@ -17,8 +17,18 @@ document.addEventListener("DOMContentLoaded", function () {
     };
 
     // chrome.windows.create(createData);
-    let names = chrome.storage.sync.get("sessionNames");
-    document.getElementById("sessNames").innerHTML = names;
+    let names = ["hi"];
+    try {
+      chrome.storage.sync.get("sessionNames", (items) => {
+        names = items.sessionNames;
+      });
+    } catch (err) {
+      chrome.storage.sync.set({ sessionNames: [] });
+      names = [];
+      alert(1);
+    }
+    alert(names);
+    document.getElementById("sessNamesLoad").innerHTML = names;
     document.getElementById("homeMenu").style.display = "none";
     document.getElementById("loadMenu").style.display = "block";
   });
@@ -34,18 +44,27 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
 
-    !"sessionNames";
-    chrome.storage.sync.get("sessionNames", (items) => {
-      var names = items;
-    });
+    let names = ["bye"];
+    try {
+      chrome.storage.sync.get("sessionNames", (items) => {
+        names = items.sessionNames;
+      });
+    } catch (err) {
+      names = ["hi"];
+      alert(err);
+    }
+
     let sessionName = document.getElementById("sName").value;
     names.push(sessionName);
     chrome.storage.sync.set({ sessionNames: names });
     chrome.storage.sync.set({ sessionName: urls });
-    alert(sessionName);
   });
 
   sessionLoad.addEventListener("click", () => {
-    let sessions = chrome.storage.sync.get([sessionName]);
+    let sessions;
+    let sessionName = document.getElementById("sessNamesLoad").value;
+    chrome.storage.sync.get(sessionName, (items) => {
+      sessions = items.sessionName;
+    });
   });
 });
